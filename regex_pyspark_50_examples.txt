@@ -1,0 +1,254 @@
+
+
+
+Here are 50 practical regex interview questions commonly asked in Spark SQL and PySpark, along with answers:
+
+1. Match a specific word in a string
+
+Q: How do you match the word “error” in a log message?
+A: Use rlike: df.filter(df["message"].rlike("\\berror\\b"))
+
+2. Check if a string starts with a certain pattern
+
+Q: How do you find strings starting with “2024”?
+A: df.filter(df["date"].rlike("^2024"))
+
+3. Check if a string ends with a certain pattern
+
+Q: How do you filter records where the string ends with “.com”?
+A: df.filter(df["email"].rlike("\\.com$"))
+
+4. Find strings containing only numbers
+
+Q: How do you filter numeric-only strings?
+A: df.filter(df["column"].rlike("^[0-9]+$"))
+
+5. Extract digits from a string
+
+Q: How do you extract all digits from a string?
+A: Use regexp_extract: df.withColumn("digits", regexp_extract("column", "\\d+", 0))
+
+6. Find strings containing uppercase letters
+
+Q: How to filter strings with uppercase letters?
+A: df.filter(df["column"].rlike("[A-Z]+"))
+
+7. Extract domain from an email
+
+Q: How to extract “gmail.com” from “user@gmail.com”?
+A: regexp_extract("email", "@(\\w+\\.\\w+)", 1)
+
+8. Remove non-alphanumeric characters
+
+Q: How to remove special characters?
+A: regexp_replace("column", "[^a-zA-Z0-9]", "")
+
+9. Split words in a sentence
+
+Q: How to split words by spaces?
+A: split(df["sentence"], "\\s+")
+
+10. Find valid email addresses
+
+Q: How to filter valid emails?
+A: df.filter(df["email"].rlike("^[\\w.-]+@[\\w.-]+\\.\\w+$"))
+
+11. Find strings with special characters
+
+Q: How to find strings with !@#$ characters?
+A: df.filter(df["column"].rlike("[!@#$]+"))
+
+12. Extract hashtag from a string
+
+Q: How to get hashtags like “#Spark”?
+A: regexp_extract("column", "#(\\w+)", 1)
+
+13. Validate phone numbers
+
+Q: How to filter numbers like “(123) 456-7890”?
+A: df.filter(df["phone"].rlike("^\\(\\d{3}\\) \\d{3}-\\d{4}$"))
+
+14. Remove whitespace from string
+
+Q: How to remove extra spaces?
+A: regexp_replace("column", "\\s+", "")
+
+15. Find strings with decimal numbers
+
+Q: How to find strings with numbers like “12.34”?
+A: df.filter(df["column"].rlike("\\d+\\.\\d+"))
+
+16. Match string with hyphen
+
+Q: How to match “part-number”?
+A: df.filter(df["column"].rlike("part-number"))
+
+17. Extract file extension
+
+Q: How to get “.pdf” from “file.pdf”?
+A: regexp_extract("filename", "\\.(\\w+)$", 1)
+
+18. Find IP addresses
+
+Q: How to match IPv4 addresses?
+A: df.filter(df["ip"].rlike("^\\d{1,3}(\\.\\d{1,3}){3}$"))
+
+19. Replace multiple spaces with a single space
+
+Q: How to replace extra spaces?
+A: regexp_replace("column", "\\s+", " ")
+
+20. Match date format
+
+Q: How to match “yyyy-mm-dd”?
+A: df.filter(df["date"].rlike("^\\d{4}-\\d{2}-\\d{2}$"))
+
+21. Extract protocol from URL
+
+Q: How to get “https” from “https://example.com”?
+A: regexp_extract("url", "^(https?)", 1)
+
+22. Extract words between parentheses
+
+Q: How to get content between ()?
+A: regexp_extract("column", "\\(([^)]+)\\)", 1)
+
+23. Find uppercase initials
+
+Q: How to find names like “John D”?
+A: df.filter(df["name"].rlike("^[A-Z][a-z]+ [A-Z]$"))
+
+24. Match repeated characters
+
+Q: How to find strings with repeated letters?
+A: df.filter(df["column"].rlike("(.)\\1+"))
+
+25. Find alphanumeric strings with underscores
+
+Q: How to find names like “user_name”?
+A: df.filter(df["username"].rlike("^[\\w_]+$"))
+
+26. Remove trailing zeros from decimal numbers
+
+Q: How do you remove trailing zeros from numbers like “123.4500”?
+A: regexp_replace("number", "(\\.\\d*?[1-9])0+$", "$1")
+
+27. Find strings with specific word patterns
+
+Q: How to find sentences with the word “data” followed by “science”?
+A: df.filter(df["sentence"].rlike("data.*science"))
+
+28. Validate alphanumeric strings with hyphens and underscores
+
+Q: How do you match “abc-123_xyz”?
+A: df.filter(df["column"].rlike("^[a-zA-Z0-9-_]+$"))
+
+29. Extract words containing specific characters
+
+Q: How to extract words with “z” in them?
+A: regexp_extract("sentence", "\\b\\w*z\\w*\\b", 0)
+
+30. Extract year from date format “yyyy-mm-dd”
+
+Q: How do you extract “2024” from “2024-10-25”?
+A: regexp_extract("date", "^(\\d{4})", 1)
+
+31. Find strings with both uppercase and lowercase letters
+
+Q: How to filter mixed-case strings?
+A: df.filter(df["column"].rlike("^(?=.[a-z])(?=.[A-Z])"))
+
+32. Match strings with repeated words
+
+Q: How do you match strings with repeated words, like “go go”?
+A: df.filter(df["column"].rlike("\\b(\\w+)\\b\\s+\\b\\1\\b"))
+
+33. Extract number after a keyword
+
+Q: How to extract “1234” from “order 1234”?
+A: regexp_extract("column", "order (\\d+)", 1)
+
+34. Remove HTML tags
+
+Q: How do you remove HTML tags from “Hello”?
+A: regexp_replace("column", "<[^>]+>", "")
+
+35. Find strings with a specific pattern of letters and numbers
+
+Q: How do you match strings like “abc123xyz”?
+A: df.filter(df["column"].rlike("^[a-zA-Z]+\\d+[a-zA-Z]+$"))
+
+36. Match MAC address pattern
+
+Q: How do you match MAC addresses like “00:0a:95:9d:68:16”?
+A: df.filter(df["mac"].rlike("^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"))
+
+37. Extract digits following a specific word
+
+Q: How to extract “45” from “age 45 years”?
+A: regexp_extract("column", "age (\\d+)", 1)
+
+38. Find strings with 3 consecutive vowels
+
+Q: How to find words with “aaa” or “eee”?
+A: df.filter(df["word"].rlike("[aeiou]{3}"))
+
+39. Validate hexadecimal numbers
+
+Q: How do you match hexadecimal strings like “0x1A3F”?
+A: df.filter(df["hex"].rlike("^0[xX][0-9A-Fa-f]+$"))
+
+40. Extract path from a URL
+
+Q: How do you extract “/path” from “http://domain.com/path”?
+A: regexp_extract("url", "http://[^/]+(/[^?]+)", 1)
+
+41. Find words of specific length
+
+Q: How to find words with exactly 5 characters?
+A: df.filter(df["column"].rlike("\\b\\w{5}\\b"))
+
+42. Match US ZIP code pattern
+
+Q: How do you match ZIP codes like “12345” or “12345-6789”?
+A: df.filter(df["zip"].rlike("^\\d{5}(-\\d{4})?$"))
+
+43. Extract currency amounts from text
+
+Q: How do you get “$100.50” from “Price: $100.50”?
+A: regexp_extract("column", "\\$\\d+(\\.\\d{2})?", 0)
+
+44. Match strings with a specific number of words
+
+Q: How do you filter sentences with exactly 3 words?
+A: df.filter(df["sentence"].rlike("^\\b\\w+\\b(\\s+\\b\\w+\\b){2}$"))
+
+45. Validate URLs
+
+Q: How do you validate URLs with HTTP/HTTPS?
+A: df.filter(df["url"].rlike("^(http|https)://[\\w.-]+"))
+
+46. Extract numbers within brackets
+
+Q: How to get “123” from “(123)”?
+A: regexp_extract("column", "\\((\\d+)\\)", 1)
+
+47. Find alphabetic characters followed by numbers
+
+Q: How do you find strings like “A123”?
+A: df.filter(df["column"].rlike("^[A-Za-z]+\\d+$"))
+
+48. Remove punctuation from text
+
+Q: How do you remove punctuation?
+A: regexp_replace("column", "[\\p{Punct}]", "")
+
+49. Find strings with digits in the middle
+
+Q: How to match strings like “abc123xyz”?
+A: df.filter(df["column"].rlike("^[a-zA-Z]+\\d+[a-zA-Z]+$"))
+
+50. Match strings without vowels
+
+Q: How do you match words with no vowels?
+A: df.filter(df["column"].rlike("^[^aeiouAEIOU]+$"))
